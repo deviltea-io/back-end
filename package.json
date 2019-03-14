@@ -23,7 +23,7 @@
     ],
     "reporter": [
       "text",
-      "html"
+      "lcov"
     ],
     "all": true,
     "check-coverage": true,
@@ -38,6 +38,7 @@
     "@types/node": "^11.11.3",
     "@types/sinon": "^7.0.10",
     "chai": "^4.2.0",
+    "codecov": "^3.2.0",
     "cross-env": "^5.2.0",
     "mocha": "^6.0.2",
     "nodemon": "^1.18.10",
