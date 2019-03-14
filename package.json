@@ -1,0 +1,57 @@
+{
+  "name": "node-typescript-boilerplate",
+  "version": "1.0.0",
+  "description": "A Boilerplate Of Node Using Typescript.",
+  "main": "index.js",
+  "repository": "https://github.com/DevilTea/node-typescript-boilerplate.git",
+  "author": "DevilTea",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node ./build/index.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/index.ts",
+    "build": "rimraf build && tsc",
+    "clean": "rimraf build .nyc_output coverage",
+    "lint": "prettier-tslint fix",
+    "test": "nyc mocha --opts ./mocha.opts ./test/**/*.test.ts"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "all": true,
+    "check-coverage": true,
+    "statements": 90,
+    "functions": 90,
+    "branches": 90,
+    "lines": 90
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.11.3",
+    "@types/sinon": "^7.0.10",
+    "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
+    "nyc": "^13.3.0",
+    "prettier": "^1.16.4",
+    "prettier-tslint": "^0.4.2",
+    "rimraf": "^2.6.3",
+    "sinon": "^7.2.7",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "tslib": "^1.9.3"
+  }
+}
