@@ -8,11 +8,11 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./build/index.js",
-    "start:dev": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts,tsx --exec 'ts-node' ./src/index.ts",
+    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node --require tsconfig-paths/register --require source-map-support/register src/index.ts",
     "build": "rimraf build && tsc",
     "clean": "rimraf build .nyc_output coverage",
     "lint": "prettier-tslint fix",
-    "test": "nyc mocha --opts ./mocha.opts ./test/**/*.test.ts"
+    "test": "cross-env TS_NODE_PROJECT=test/tsconfig.json nyc mocha --opts ./mocha.opts ./test/**/*.test.ts"
   },
   "nyc": {
     "extension": [
@@ -34,7 +34,18 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
+    "@types/jsonwebtoken": "^8.3.2",
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.2.2",
+    "@types/koa-compose": "^3.2.3",
+    "@types/koa-helmet": "^3.1.2",
+    "@types/koa-jwt": "^3.3.0",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.0.40",
+    "@types/koa2-cors": "^2.0.1",
     "@types/mocha": "^5.2.6",
+    "@types/mongodb": "^3.1.22",
+    "@types/mongoose": "^5.3.24",
     "@types/node": "^11.11.3",
     "@types/sinon": "^7.0.10",
     "chai": "^4.2.0",
@@ -47,12 +58,28 @@
     "prettier-tslint": "^0.4.2",
     "rimraf": "^2.6.3",
     "sinon": "^7.2.7",
+    "ts-mocha": "^6.0.0",
     "ts-node": "^8.0.3",
+    "tsconfig-paths": "^3.8.0",
     "tslint": "^5.14.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3333"
   },
   "dependencies": {
+    "firebase-admin": "^7.2.0",
+    "ioredis": "^4.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-compose": "^4.1.0",
+    "koa-helmet": "^4.1.0",
+    "koa-jwt": "^3.5.1",
+    "koa-logger": "^3.2.0",
+    "koa-protect": "^1.0.1",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "koa2-ratelimit": "^0.8.0",
+    "mongoose": "^5.4.22",
     "tslib": "^1.9.3"
   }
 }
