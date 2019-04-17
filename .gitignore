@@ -84,3 +84,6 @@ typings/
 
 # Build output
 build/
+
+# Firebase key
+src/app/utils/firebase-auth/serviceAccountKey.json
