@@ -1,0 +1,11 @@
+{
+  "app": {
+    "jwtSecret": "uahsviu"
+  },
+  "db": {
+    "host": "localhost",
+    "user": "waasay",
+    "pass": "waasay",
+    "name": "waa"
+  }
+}
