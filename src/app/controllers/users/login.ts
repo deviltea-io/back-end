@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import '@utils/firebase-auth'
 import { User, UserDocument } from '@models/user'
 import { app as config } from '@/config.json'
+import redis from '@utils/redis'
 
 async function login (ctx: Context): Promise<void> {
   const idToken: string = ctx.request.body.idToken
@@ -27,17 +28,16 @@ async function login (ctx: Context): Promise<void> {
     },
     config.jwtSecret
   )
+  const expirationSeconds: number = 30 * 24 * 60 * 60
+  await redis.set(token, 'true', 'ex', expirationSeconds)
   ctx.cookies.set('token', token, {
-    maxAge: 30 * 24 * 60 * 60 * 1000, // ONE MONTH
+    maxAge: expirationSeconds * 1000,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     domain: 'localhost',
     overwrite: true
   })
-  ctx.status = 200
-  ctx.body = {
-    token
-  }
+  ctx.status = 204
 }
 
 export default login
