@@ -1,17 +1,18 @@
 import mongoose, { ConnectionOptions } from 'mongoose'
+import { db as config } from '@/config.json'
 
-import { db as config } from './config.json'
-
-async function connect (): Promise<void> {
-  const uriString: string = `mongodb://${
+export async function connect (): Promise<void> {
+  const uriString: string = `mongodb://${config.user}:${config.pass}@${
     process.env.NODE_ENV === 'docker' ? 'mongo' : config.host
-  }/${config.name}`
-  const options: ConnectionOptions = {
-    user: config.user,
-    pass: config.pass,
+  }:${config.port}/${config.name}`
+  interface ExtendedConnectionOptions extends ConnectionOptions {
+    family?: number
+  }
+  const options: ExtendedConnectionOptions = {
     useNewUrlParser: true,
     useFindAndModify: false,
-    useCreateIndex: true
+    useCreateIndex: true,
+    family: 4
   }
 
   try {
@@ -22,10 +23,8 @@ async function connect (): Promise<void> {
       console.log('Mongoose default connection closed through app termination')
       process.exit(0)
     })
-  } catch (err) {
-    console.log(`Mongoose default connection error: ${err}`)
-    throw err
+  } catch (error) {
+    console.log(`Mongoose default connection error: ${error}`)
+    throw error
   }
 }
-
-export default connect

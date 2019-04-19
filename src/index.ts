@@ -1,8 +1,10 @@
 import app from '@/app'
-import connectDB from './connectDB'
+import { connect as connectDB } from '@utils/db'
+import { connect as connectRedis } from '@utils/redis'
 
 async function start (): Promise<void> {
   await connectDB()
+  await connectRedis()
   app.listen(8787, () => {
     console.log('server is listening on http://localhost:8787')
   })

@@ -4,8 +4,13 @@
   },
   "db": {
     "host": "localhost",
+    "port": 27017,
     "user": "waasay",
     "pass": "waasay",
     "name": "waa"
+  },
+  "redis": {
+    "host": "localhost",
+    "port": 6379
   }
 }
