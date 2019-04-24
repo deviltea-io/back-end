@@ -37,19 +37,7 @@
     },
     "promise-function-async": true,
     "space-within-parens": true,
-    "newline-per-chained-call": false,
-    "typedef": [
-      true,
-      "call-signature",
-      "arrow-call-signature",
-      "parameter",
-      "arrow-parameter",
-      "property-declaration",
-      "variable-declaration",
-      "member-variable-declaration",
-      "object-destructuring",
-      "array-destructuring"
-    ]
+    "newline-per-chained-call": false
   },
   "rulesDirectory": []
 }
