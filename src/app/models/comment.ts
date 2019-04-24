@@ -1,16 +1,40 @@
-import { model, Model, Document, Schema } from 'mongoose'
+import { Schema, Types } from 'mongoose'
 
-export interface CommentProperties {}
+export interface CommentProperties {
+  userId: string
+  content: string
+  createdTime: Date
+  updatedTime?: Date
+  deleted: boolean
+}
 export interface CommentMethods {}
 export interface CommentDocument
   extends CommentProperties,
     CommentMethods,
-    Document {}
-export interface CommentStatics {}
-export interface CommentModel extends CommentStatics, Model<CommentDocument> {}
+    Types.Embedded {}
 
-const commentSchema: Schema = new Schema()
-export const Comment: CommentModel = model<CommentDocument, CommentModel>(
-  'Comment',
-  commentSchema
+export const commentSchema: Schema = new Schema(
+  {
+    userId: {
+      type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    },
+    updatedTime: {
+      type: Date,
+      required: false
+    },
+    deleted: {
+      type: Boolean,
+      required: true,
+      default: (): boolean => false
+    }
+  },
+  { capped: true }
 )
+commentSchema.virtual('createdTime').get(function (this: CommentDocument): Date {
+  return this._id.getTimestamp()
+})
