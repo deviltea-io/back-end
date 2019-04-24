@@ -1,1 +1,7 @@
-export default {}
+export { default as createArticle } from './createArticle'
+export { default as getArticleList } from './getArticleList'
+export { default as getArticleInfo } from './getArticleInfo'
+export { default as getArticleContent } from './getArticleContent'
+export { default as updateArticle } from './updateArticle'
+export { default as deleteArticle } from './deleteArticle'
+export { default as increaseViewCount } from './increaseViewCount'
