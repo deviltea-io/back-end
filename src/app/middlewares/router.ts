@@ -18,11 +18,12 @@ const isTokenExisted: Middleware<
 > = async function (ctx: Context, next: () => Promise<any>): Promise<void> {
   const jwt: string = ctx.state.jwt
   const existed: boolean = !!(await redis.get(jwt))
-  if (existed) {
-    await next()
-  } else {
+  if (!existed) {
+    ctx.cookies.set('token', undefined)
     ctx.throw(401, "token doesn't exist")
+    return
   }
+  await next()
 }
 
 export default compose([
