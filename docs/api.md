@@ -18,13 +18,31 @@
 
 **Response**：
 
-`status 200`
+`status 204`
+
+No content
+
+`status 404`
 
 ```json
 {
-  "token": string
+  "message": string
 }
 ```
+
+### （Private）`POST` - `/api/users/logout`
+
+> 使用者登出
+
+**Request**：
+
+No content
+
+**Response**：
+
+`status 204`
+
+No content
 
 `status 404`
 
@@ -102,12 +120,12 @@ QueryString：
 
 - index：起始索引（預設為 0）
 - amount：索引數量（預設為 10）
-- tags：以 tag 過濾文章列表
+- tag：以 tag 過濾文章列表
 - sort：排序方式
   - publish：發表時間
   - views：觀看數
   - comments：留言數
-- descending：搭配 sort 使用，降冪排序（預設為 false）
+- ascending sort 使用，升序排序（預設為 false）
 
 **Response**：
 
@@ -135,9 +153,11 @@ QueryString：
 
 ```json
 {
+  "coverUrl": string,
   "title": string,
   "tags": string[],
-  "content": string
+  "content": string,
+  "password": string | null
 }
 ```
 
@@ -175,9 +195,9 @@ QueryString：
 }
 ```
 
-### （Public）`GET` - `/api/articles/:articleId`
+### （Public）`GET` - `/api/articles/:articleId/info`
 
-> 根據 ID 取得文章
+> 根據 ID 取得文章資訊
 
 **Request**：
 
@@ -189,13 +209,44 @@ No content
 
 ```json
 {
+  "coverUrl": string,
   "title": string,
   "tags": string[],
-  "content": string,
   "viewCount": number,
   "createdTime": Date,
-  "updatedTime": Date | undefined,
+  "updatedTime": Date | null,
   "deleted": boolean,
+  "locked": boolean
+}
+```
+
+`status 404`
+
+```json
+{
+  "message": string
+}
+```
+
+### （Public）`POST` - `/api/articles/:articleId/content`
+
+> 根據 ID 取得文章內文
+
+**Request**：
+
+```json
+{
+  "password": string | null
+}
+```
+
+**Response**：
+
+`status 200`
+
+```json
+{
+  "content": string
 }
 ```
 
@@ -215,9 +266,11 @@ No content
 
 ```json
 {
-  "title": string | undefined,
-  "tags": string[] | undefined,
-  "content": string | undefined
+  "coverUrl": string,
+  "title": string,
+  "tags": string[],
+  "content": string,
+  "password": string | null
 }
 ```
 
@@ -381,7 +434,7 @@ QueryString：
   "userId": string,
   "content": string,
   "createdTime": Date,
-  "updatedTime": Date | undefined,
+  "updatedTime": Date | null,
   "deleted": boolean
 }
 ```
@@ -427,7 +480,7 @@ No content
   "userId": string,
   "content": string,
   "createdTime": Date,
-  "updatedTime": Date | undefined,
+  "updatedTime": Date | null,
   "deleted": boolean
 }
 ```
@@ -461,7 +514,7 @@ No content
   "userId": string,
   "content": string,
   "createdTime": Date,
-  "updatedTime": Date | undefined,
+  "updatedTime": Date | null,
   "deleted": boolean
 }
 ```
