@@ -3,10 +3,18 @@ import { Permission, UserDocument, User } from '@models/user'
 
 async function isMember (ctx: Context, next: () => Promise<any>): Promise<void> {
   const userId: string = ctx.state.jwtData.userId
-  const user: UserDocument | null = await User.findById(userId).exec()
+  let user: UserDocument | null = null
+  try {
+    user = await User.findById(userId).exec()
+  } catch {
+    ctx.cookies.set('token', undefined)
+    ctx.throw(401, 'unknown user')
+    return
+  }
   if (user === null) {
     ctx.cookies.set('token', undefined)
     ctx.throw(401, 'unknown user')
+    return
   } else if (
     user.permission === Permission.Member ||
     user.permission === Permission.Admin
@@ -14,6 +22,7 @@ async function isMember (ctx: Context, next: () => Promise<any>): Promise<void> 
     await next()
   } else {
     ctx.throw(403, 'permission denied')
+    return
   }
 }
 
