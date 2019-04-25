@@ -33,8 +33,8 @@ async function login (ctx: Context): Promise<void> {
   ctx.cookies.set('token', token, {
     maxAge: expirationSeconds * 1000,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    domain: 'localhost',
+    secure: false,
+    domain: (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'docker') ? 'deviltea.io' : 'localhost',
     overwrite: true
   })
   ctx.status = 204

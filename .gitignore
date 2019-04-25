@@ -90,3 +90,6 @@ src/app/utils/firebase-auth/serviceAccountKey.json
 
 # MongoDb data
 data/mongodb/db
+
+# Redis data
+data/redis/data
