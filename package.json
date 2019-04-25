@@ -7,9 +7,10 @@
   "author": "DevilTea",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./build/index.js",
-    "dev": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node --require tsconfig-paths/register --require source-map-support/register src/index.ts",
-    "build": "rimraf build && tsc",
+    "start": "cross-env TS_NODE_PROJECT=build/tsconfig.json NODE_ENV=production node --require tsconfig-paths/register ./build/index.js",
+    "start:docker": "cross-env TS_NODE_PROJECT=build/tsconfig.json NODE_ENV=docker ts-node --require tsconfig-paths/register ./build/index.js",
+    "dev": "cross-env TS_NODE_PROJECT=src/tsconfig.json NODE_ENV=development nodemon --watch 'src/**/*' -e ts,tsx --exec ts-node --require tsconfig-paths/register --require source-map-support/register src/index.ts",
+    "build": "rimraf build && tsc -p ./src/tsconfig.json && cpx ./src/tsconfig.json ./build",
     "clean": "rimraf build .nyc_output coverage",
     "lint": "prettier-tslint fix",
     "test": "cross-env TS_NODE_PROJECT=test/tsconfig.json nyc mocha --opts ./mocha.opts ./test/**/*.test.ts"
@@ -52,6 +53,7 @@
     "@types/sinon": "^7.0.10",
     "chai": "^4.2.0",
     "codecov": "^3.2.0",
+    "cpx": "^1.5.0",
     "cross-env": "^5.2.0",
     "mocha": "^6.0.2",
     "nodemon": "^1.18.10",

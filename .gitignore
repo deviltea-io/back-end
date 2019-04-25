@@ -87,3 +87,6 @@ build/
 
 # Firebase key
 src/app/utils/firebase-auth/serviceAccountKey.json
+
+# MongoDb data
+data/mongodb/db

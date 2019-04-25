@@ -1,7 +1,9 @@
 import Redis from 'ioredis'
 import { redis as config } from '@/config.json'
 
-const uriString: string = `redis://${config.host}:${config.port}`
+const uriString: string = `redis://${
+  process.env.NODE_ENV === 'docker' ? 'redis' : config.host
+}:${config.port}`
 const redis: Redis.Redis = new Redis(uriString, {
   lazyConnect: true,
   family: 4
